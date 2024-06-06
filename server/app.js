@@ -2,6 +2,7 @@ import 'dotenv/config'
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
+import { checkConnection } from "./config/db.js";
 import mountRoutes from './routes.js';
 
 const app = express();
@@ -11,10 +12,11 @@ app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(morgan('tiny'))
 
+checkConnection()
+
 const PORT = process.env.PORT;
 
 mountRoutes(app);
-
 
 app.get('/', (req, res)=>{
     res.status(200).send("Hello World");
