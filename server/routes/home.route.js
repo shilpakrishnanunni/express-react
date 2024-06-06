@@ -2,7 +2,10 @@ import { Router } from "express";
 
 const router = Router();
 
-router.get("/", (req, res) => {
+router.post("/", (req, res) => {
+    console.log(req.headers)
+    console.log("req.body", req.body)
+    console.log("req.query", req.query)
     return res.json({ message: "hi" })
 })
 
