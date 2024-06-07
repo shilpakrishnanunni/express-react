@@ -39,3 +39,4 @@ export const checkConnection = async () => {
     }
 } 
 
+export default sequelize;

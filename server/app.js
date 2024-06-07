@@ -34,6 +34,11 @@ app.use((err, req, res, next) => {
     res.status(500).json({ error: err.message });
 })
 
+app.use((req, res) => {
+    console.log("API DOESN'T EXIST:",req.method,req.url);
+    res.send(`API DOESN'T EXIST: ${req.method} ${req.url}`);
+})
+
 app.listen(PORT, () => {
     console.log(`Server running successfully on port ${PORT}`);
 })
