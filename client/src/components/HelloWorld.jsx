@@ -25,19 +25,25 @@ export default function HelloWorld() {
 
 export function TestForm() {
 
-    const [formData, setFormData] = useState({ inputValue: "", hiddenValue: "test" });
+    const [formData, setFormData] = useState({
+        description: "", 
+        amount: 0, 
+        category: 1, 
+        type: "credit" 
+    });
 
-    // function handleChange(e) {
-    //     setFormData({
-    //         inputValue: e.target.value
-    //     });
-    // }
+    function handleChange(e) {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    }
 
     async function handleSubmit(e) {
         e.preventDefault();
         try {
             console.log("formData", formData)
-            await api.post("home", JSON.stringify(formData) )
+            await api.post("home/add-transaction", JSON.stringify(formData) )
         } catch (error) {
             console.log(error)
         }
@@ -46,9 +52,14 @@ export function TestForm() {
     return (
         <div className="" >
             <form onSubmit={handleSubmit}>
-                <label>
-                <input type="text" name="inputValue" value={FormData.inputValue} onChange={(e) => {setFormData({...formData, inputValue: e.target.value})}} />
-                </label>
+                <input type="text" name="description" placeholder="description" value={formData.description} onChange={handleChange} />
+                <input type="number" name="amount" placeholder="amount" value={formData.amount} onChange={handleChange} />
+                <input type="number" name="category" placeholder="category" value={formData.category} onChange={handleChange} />
+                <label htmlFor="transaction_type">Transaction type:</label>
+                <select name="type" id="transaction_type" className="browser-default" value={formData.type} onChange={handleChange}>
+                    <option value="credit">Credit</option>
+                    <option value="debit">Debit</option>
+                </select>
                 <button type="submit">Submit</button>
             </form>
         </div>
