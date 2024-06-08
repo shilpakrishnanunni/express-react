@@ -16,8 +16,8 @@ const defaults = {
 }
 
 const api = async (method, url, variables) => {
-    console.log(variables)
-    await axios.request({
+    console.log("variables",variables)
+    return await axios.request({
         method,
         url: `${defaults.baseURL}${url}`,
         headers: defaults.headers,
