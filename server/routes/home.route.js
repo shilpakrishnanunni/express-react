@@ -19,4 +19,20 @@ router.post("/add-transaction", async (req, res) => {
     res.json({ response: "Transaction added to db." })
 })
 
+router.get("/transaction-history", async (req, res) => {
+    const transactions = await Transactions.findAll({
+        attributes: ["description", "amount", "category", "type", "createdAt"],
+        order: [["createdAt", "DESC"]]
+    });
+    const data = transactions.map((txn) => ({
+        description: txn.description,
+        amount: txn.amount,
+        category: txn.category,
+        type: txn.type,
+        createdAt: txn.createdAt
+    }))
+    console.log(data)
+    res.json({ data });
+})
+
 export default router;
