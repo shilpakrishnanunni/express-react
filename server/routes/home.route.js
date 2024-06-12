@@ -9,14 +9,14 @@ router.get("/", (req, res) => {
 })
 
 router.post("/add-transaction", async (req, res) => {
-    console.log(req.body);
+    console.log("req.body",req.body);
     await Transactions.create({ 
         description: req.body.description,
         amount: req.body.amount,
-        category: req.body.category,
+        category: 1,
         type: req.body.type
     })
-    res.json({ response: "Transaction added to db." })
+    res.json({ status:true, response: "Transaction added to db." })
 })
 
 router.get("/transaction-history", async (req, res) => {
@@ -27,7 +27,7 @@ router.get("/transaction-history", async (req, res) => {
     const data = transactions.map((txn) => ({
         description: txn.description,
         amount: txn.amount,
-        category: txn.category,
+        category: 1,
         type: txn.type,
         createdAt: txn.createdAt
     }))

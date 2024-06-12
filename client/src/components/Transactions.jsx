@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import api from "../utils/api";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, QueryClient, useQueryClient, useMutation } from "@tanstack/react-query";
+import "../styles/transactions.css";
 
 export default function HelloWorld() {
     const [response, setResponse] = useState("");
@@ -24,20 +25,58 @@ export default function HelloWorld() {
     )
 }
 
+export function Timer() {
+    const [count, setCount] = useState(0);
 
-// export function Transactions() {
-//     TestForm()
-//     TestTable()
-// }
+    useEffect(() => {
+        setTimeout(() => {
+          setCount((count) => count + 1);
+        }, 1000);
+      });
 
-export function TestForm() {
+    return (
+        <h1>Rendered {count} times.</h1>
+    )
 
-    const [formData, setFormData] = useState({
-        description: "", 
-        amount: 0, 
-        category: 1, 
-        type: "credit" 
-    });
+}
+
+export const Transactions = () => {
+    const [txn, setTxn] = useState([]);
+
+    useLayoutEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = async () => {
+        try {
+            console.log("here")
+            const response = await api.get('home/transaction-history');
+            console.log("data",response.data.data)
+            setTxn(response.data.data);
+        } catch (error) {
+            console.log("Error fetching data", error);
+        }
+    }
+
+    const onFormSubmit = async (formData) => {
+        try {
+            await api.post("home/add-transaction", JSON.stringify(formData));
+            fetchData();
+        } catch (error) {
+            console.log("Error submitting form", error);
+        }
+    }
+
+    return (
+        <div>
+            < TransactionForm onFormSubmit={onFormSubmit} />
+            < TransactionTable transactions={txn} />
+        </div>
+    )
+}
+
+const TransactionForm = ({onFormSubmit}) => {
+    const [formData, setFormData] = useState({description:"", amount: "", type:"debit"})
 
     function handleChange(e) {
         setFormData({
@@ -46,67 +85,52 @@ export function TestForm() {
         });
     }
 
-    async function handleSubmit(e) {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        try {
-            console.log("formData", formData)
-            await api.post("home/add-transaction", JSON.stringify(formData) )
-        } catch (error) {
-            console.log(error)
+        if (formData.description && formData.amount) {
+            onFormSubmit(formData);
+            setFormData({description:"", amount: "", type:"debit"})
         }
     }
 
+
     return (
-        <form onSubmit={handleSubmit} className="col s12">
+        <form onSubmit={handleSubmit} className="txn-form">
+            <h4>Add Transaction</h4>
             <div className="row" >
-                <div className="input-field col s12">
+                <div className="input-field">
                     <input id="description" type="text" className="validate" name="description" placeholder="description" value={formData.description} onChange={handleChange} />
                     <label htmlFor="description">Description</label>
                 </div>
             </div>
             <div className="row">
-                <div className="input-field col s6">
+                <div className="input-field">
                     <input id="amount" type="number" className="validate" name="amount" placeholder="amount" value={formData.amount} onChange={handleChange} />
                     <label htmlFor="amount">Amount</label>
                 </div>
             </div>
             <div className="row">
-                <div className="input-field col s6">
-                    <input id="category" type="number" className="validate" name="category" placeholder="category" value={formData.category} onChange={handleChange} />
-                    <label htmlFor="category">Category</label>
+                <div className="input-field">
+                    <label htmlFor="radio-credit">
+                    <input id='radio-credit' type="radio" name="type" value="credit" className="with-gap" checked={formData.type==='credit'} onChange={handleChange} />
+                        Credit</label>
                 </div>
+                
             </div>
             <div className="row">
-                <div className="input-field col s12">
-                {/* <label htmlFor="transaction_type">Transaction type:</label> */}
-                    <select name="type" id="transaction_type" className="browser-default" value={formData.type} onChange={handleChange}>
-                        <option value="credit">Credit</option>
-                        <option value="debit">Debit</option>
-                    </select>
-
+                <div className="input-field">
+                    <label htmlFor="radio-debit">
+                    <input id='radio-debit' type="radio" name="type" value="debit" className="with-gap" checked={formData.type==='debit'} onChange={handleChange} />
+                        Debit</label>
                 </div>
             </div>
-            <button className="button waves-effect waves-light" type="submit">Submit</button>
+            <button className="button" type="submit">Submit</button>
         </form>
     )
 }
 
-export function TestTable() {
-
-    async function fetchData() {
-        const response = await api.get('home/transaction-history');
-        return response.data.data;
-    }
-
-    const { isError, isLoading, error, data } = useQuery({
-        queryKey: ['transactionHistory'],
-        queryFn: fetchData
-    })
-    console.log("response.data",data)
-
-    if (isLoading) return <div>Loading...</div>;
-    if (isError) return <div>Error: {error.message}</div>;
-
+const TransactionTable = ({transactions}) => {
+    console.log("transactions", transactions)
     return (
         <div>
             <h1>Transaction History</h1>
@@ -120,14 +144,21 @@ export function TestTable() {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((txn, index) => (
-                        <tr key={index}>
+                    {transactions?.length > 0 ? (
+                        transactions?.map((txn, index) => 
+                        (<tr key={index} className="table-row" >
                             <td>{txn.description}</td>
                             <td>{txn.amount}</td>
                             <td>{txn.createdAt}</td>
                             <td>{txn.type}</td>
+                        </tr>)
+                        )
+                    ) : (
+                        <tr colSpan="4" >
+                            No transactions.
                         </tr>
-                    ))}
+                    )}
+                    {}
                 </tbody>
             </table>
         </div>
