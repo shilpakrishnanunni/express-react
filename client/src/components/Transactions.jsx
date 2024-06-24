@@ -49,7 +49,6 @@ export const Transactions = () => {
 
     const fetchData = async () => {
         try {
-            console.log("here")
             const response = await api.get('home/transaction-history');
             console.log("data",response.data.data)
             setTxn(response.data.data);
@@ -68,14 +67,15 @@ export const Transactions = () => {
     }
 
     return (
-        <div>
+        <div className="txn-container">
             < TransactionForm onFormSubmit={onFormSubmit} />
             < TransactionTable transactions={txn} />
         </div>
     )
 }
 
-const TransactionForm = ({onFormSubmit}) => {
+const TransactionForm = (props) => {
+    const { onFormSubmit } = props;
     const [formData, setFormData] = useState({description:"", amount: "", type:"debit"})
 
     function handleChange(e) {
@@ -93,74 +93,61 @@ const TransactionForm = ({onFormSubmit}) => {
         }
     }
 
+    const handleCheckBox = (e) => {
+        const isChecked = e.target.checked;
+        console.log("checked",isChecked)
+        setFormData({
+            ...formData,
+            type: isChecked ? 'credit' : 'debit'
+        })
+    }
+
 
     return (
-        <form onSubmit={handleSubmit} className="txn-form">
+        <div className="txn-form-container">
             <h4>Add Transaction</h4>
-            <div className="row" >
-                <div className="input-field">
-                    <input id="description" type="text" className="validate" name="description" placeholder="description" value={formData.description} onChange={handleChange} />
-                    <label htmlFor="description">Description</label>
-                </div>
-            </div>
-            <div className="row">
-                <div className="input-field">
-                    <input id="amount" type="number" className="validate" name="amount" placeholder="amount" value={formData.amount} onChange={handleChange} />
-                    <label htmlFor="amount">Amount</label>
-                </div>
-            </div>
-            <div className="row">
-                <div className="input-field">
-                    <label htmlFor="radio-credit">
-                    <input id='radio-credit' type="radio" name="type" value="credit" className="with-gap" checked={formData.type==='credit'} onChange={handleChange} />
-                        Credit</label>
-                </div>
-                
-            </div>
-            <div className="row">
-                <div className="input-field">
-                    <label htmlFor="radio-debit">
-                    <input id='radio-debit' type="radio" name="type" value="debit" className="with-gap" checked={formData.type==='debit'} onChange={handleChange} />
-                        Debit</label>
-                </div>
-            </div>
-            <button className="button" type="submit">Submit</button>
-        </form>
+            <form onSubmit={handleSubmit} className="txn-form">
+                {/* <h4>Add Transaction</h4> */}
+                    <div className="input-field input-description">
+                        <input id="description" type="text" className="validate" name="description" placeholder="description" value={formData.description} onChange={handleChange} />
+                        {/* <label htmlFor="description">Description</label> */}
+                    </div>
+                    <div className="input-field input-amount">
+                        <label htmlFor="amount">₹</label>
+                        <input id="amount" type="number" className="validate" name="amount" placeholder="amount" value={formData.amount} onChange={handleChange} />
+                        {/* <label htmlFor="amount">Amount</label> */}
+                    </div>
+                    <div className="input-field credit-debit">
+                        <label className="toggle-switch">
+                            <input type="checkbox" onChange={handleCheckBox} checked={formData.type==='credit'} />
+                            <div className="toggle-switch-background" >
+                                <div className="toggle-switch-handle" ></div>
+                            </div>
+                        </label>
+                    </div>
+                    <div className="input-field submit-button">
+                        <button className="button" type="submit">Add</button>
+                    </div>
+            </form>
+        </div>
+
     )
 }
 
 const TransactionTable = ({transactions}) => {
-    console.log("transactions", transactions)
+    console.log("new table")
     return (
-        <div>
+        <div className="table-container" >
             <h1>Transaction History</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Description</th>
-                        <th>Amount</th>
-                        <th>Date</th>
-                        <th>Transaction Type</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {transactions?.length > 0 ? (
-                        transactions?.map((txn, index) => 
-                        (<tr key={index} className="table-row" >
-                            <td>{txn.description}</td>
-                            <td>{txn.amount}</td>
-                            <td>{txn.createdAt}</td>
-                            <td>{txn.type}</td>
-                        </tr>)
-                        )
-                    ) : (
-                        <tr colSpan="4" >
-                            No transactions.
-                        </tr>
-                    )}
-                    {}
-                </tbody>
-            </table>
+            <ul>
+                {transactions.map((txn, index) => (
+                    <li key={index} className="table-row" >
+                        <span className="txn-description" >{txn.description ?? "<No Description>"}</span>
+                        <span className={txn.type=="credit" ? "txn-amount green-text" : "txn-amount red-text"}>{txn.amount}</span>
+                        <span className="txn-date">{txn.createdAt}</span>
+                    </li>
+                ))}
+            </ul>
         </div>
     )
 }
