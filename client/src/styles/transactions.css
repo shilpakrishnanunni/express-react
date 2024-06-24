@@ -1,0 +1,215 @@
+* {
+    box-sizing: border-box;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type=number] {
+    -moz-appearance: textfield;
+    /* appearance: none; */
+}
+
+.txn-container {
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    /* border: 1px solid black; */
+    /* padding: 0.5em; */
+}
+/* ------------------------------------------------------------------------------- */
+
+.txn-form-container {
+    width: 100%;
+    padding: 20px;
+    margin: 10px;
+    box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.1);
+    border-radius: 2em;
+}
+
+.txn-form {
+    width: 100%;
+    display: inline-block;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-items: center;
+    height: 4em;
+}
+
+.input-field {
+    padding: 5px;
+    height: 70%;
+    input {
+        width: 90%;
+        height: 40px;
+        /* padding: 9px; */
+        border-radius: 2em;
+        border: 1px solid cadetblue;
+    }
+}
+
+.input-description {
+    flex-basis: 40%;
+}
+
+.input-amount {
+    flex-basis: 20%;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+}
+
+.input-amount label {
+    flex-basis: 10%;
+    position: absolute;
+    top: 17px;
+}
+#amount {
+    flex-basis: 90%;
+}
+/* -------------------TOGGLE SWITCH [START]----------------------- */
+.credit-debit {
+    flex-basis: 30%;
+    display: flex;
+    /* flex-direction: row; */
+    /* width: 100px; */
+}
+
+.toggle-switch {
+    position: relative;
+    width: 150px;
+    height: 40px;
+    /* background-color: blue; */
+    input {
+        display: none;
+    }
+}
+
+.toggle-switch-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f13030;
+    border-radius: 20px;
+    box-shadow: inset 0 0 0 2px #ccc;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.toggle-switch-handle {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-color: #fff;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+    top: 5px;
+    left: 5px;
+}
+
+.toggle-switch::before {
+    content: "";
+    position: absolute;
+    /* top: -25px;
+    right: -35px;
+    font-size: 12px;
+    font-weight: bold; */
+    color: #aaa;
+    /* text-shadow: 1px 1px #fff; */
+    transition: color 0.3s ease-in-out;
+}
+
+.toggle-switch input[type='checkbox']:checked + .toggle-switch-background {
+    background-color: #05c46b;
+}
+
+.toggle-switch input[type="checkbox"]:checked + .toggle-switch-background .toggle-switch-handle {
+    transform: translateX(110px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2), 0 0 0 3px #05c46b;
+}
+
+#button-credit {
+    background-color: #04AA6D;
+}
+
+#button-debit {
+    background-color: rgb(226, 32, 74);
+}
+
+/* -------------------TOGGLE SWITCH [END]--------------------- */
+
+.submit-button {
+    flex-basis: 10%;
+}
+
+button[type=submit] {
+    border: none;
+    background-color: aquamarine;
+    border-radius: 2em;
+    width: 90%;
+    height: 40px;
+}
+
+.input-field label {
+    margin-left: 10px;
+}
+
+.radio-field {
+    margin-right: 20px;
+}
+/* ------------------------------------------------------------------------------- */
+.table-container {
+    width: 100%;
+    margin: 10px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+ul {
+    width: 100%;
+}
+
+li {
+    box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.1);
+    /* margin: 0.5em; */
+    padding: 1em;
+    border-radius: 2em;;
+    display: flex;
+    align-items: center;
+    
+}
+
+span {
+    margin: 0px 3px;
+    /* width: 25px; */
+    /* padding: 0px 10px; */
+}
+.txn-description {
+    overflow: scroll;
+    flex-basis: 40%;
+    padding-left: 7px;
+}
+
+.txn-amount {
+    flex-basis: 30%;
+}
+
+.txn-date {
+    flex-basis: 30%;
+    font-size: 0.6em;
+    padding-right: 7px;
+}
+
+.green-text {
+    color: darkgreen;
+}
+
+.red-text {
+    color: red;
+}

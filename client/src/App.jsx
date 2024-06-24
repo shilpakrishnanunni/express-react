@@ -1,11 +1,14 @@
-import HelloWorld, { TestForm } from "./components/HelloWorld.jsx";
+import HelloWorld, { Transactions, Timer } from "./components/Transactions.jsx";
 import LandingPage from "./components/LandingPage.jsx";
 
 function App() {
   return (
     <>
         {/* < HelloWorld /> */}
-        < TestForm />
+        < Transactions />
+        <Timer />
+        {/* < TestForm />
+        < TestTable /> */}
         {/* < LandingPage /> */}
     </>
   )
