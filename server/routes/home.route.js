@@ -1,5 +1,7 @@
 import { Router } from "express";
+import moment from 'moment';
 import Transactions from "../models/transactions.model.js";
+import { Sequelize } from "sequelize";
 
 const router = Router();
 
@@ -29,9 +31,18 @@ router.get("/transaction-history", async (req, res) => {
         amount: txn.amount,
         category: 1,
         type: txn.type,
-        createdAt: txn.createdAt
+        createdAt: moment(txn.createdAt).format('DD-MM-YYYY')
     }))
-    console.log(data)
+    res.json({ data });
+})
+
+router.get("/total-income-expense", async (req, res) => {
+    const data = await Transactions.findOne({
+        attributes: [
+            [Sequelize.literal('SUM(CASE WHEN type="credit" THEN `amount` ELSE 0 END)'),'totalCredit'],
+            [Sequelize.literal('SUM(CASE WHEN type="debit" THEN `amount` ELSE 0 END)'),'totalDebit']
+        ]
+    })
     res.json({ data });
 })
 
