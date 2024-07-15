@@ -1,7 +1,7 @@
 import { Router } from "express";
-import moment from 'moment';
 import Transactions from "../models/transactions.model.js";
-import { Sequelize } from "sequelize";
+import { Op, Sequelize } from "sequelize";
+import { convertToLocalTZ, convertToUTC } from "../utils/date-tz.js";
 
 const router = Router();
 
@@ -24,26 +24,44 @@ router.post("/add-transaction", async (req, res) => {
 router.get("/transaction-history", async (req, res) => {
     const transactions = await Transactions.findAll({
         attributes: ["description", "amount", "category", "type", "createdAt"],
-        order: [["createdAt", "DESC"]]
+        order: [["createdAt", "DESC"]],
+        limit: 5
     });
     const data = transactions.map((txn) => ({
         description: txn.description,
         amount: txn.amount,
         category: 1,
         type: txn.type,
-        createdAt: moment(txn.createdAt).format('DD-MM-YYYY')
+        createdAt: convertToLocalTZ(txn.createdAt)
     }))
     res.json({ data });
 })
 
 router.get("/total-income-expense", async (req, res) => {
+    const today = new Date();
+    const firstDay = new Date(Date.UTC(today.getFullYear(), today.getMonth(), 1, 0, 0, 0));
+    const lastDay = new Date(Date.UTC(today.getFullYear(), today.getMonth() + 1, 0, 23, 59, 59));
+
     const data = await Transactions.findOne({
         attributes: [
             [Sequelize.literal('SUM(CASE WHEN type="credit" THEN `amount` ELSE 0 END)'),'totalCredit'],
             [Sequelize.literal('SUM(CASE WHEN type="debit" THEN `amount` ELSE 0 END)'),'totalDebit']
-        ]
+        ],
+        raw: true
     })
-    res.json({ data });
+    const monthData = await Transactions.findOne({
+        attributes: [
+            [Sequelize.literal('SUM(CASE WHEN type="credit" THEN `amount` ELSE 0 END)'),'totalCredit'],
+            [Sequelize.literal('SUM(CASE WHEN type="debit" THEN `amount` ELSE 0 END)'),'totalDebit']
+        ],
+        where: { createdAt: { [Op.between]: [ firstDay, lastDay ] } },
+        raw: true
+    });
+    res.json({ 
+        totalSavings: (Number(data.totalCredit) > Number(data.totalDebit)) ? Number(data.totalCredit) - Number(data.totalDebit) : 0,
+        monthIncome: monthData.totalCredit,
+        monthDebit: monthData.totalDebit
+    });
 })
 
 export default router;
