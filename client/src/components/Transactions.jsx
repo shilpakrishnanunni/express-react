@@ -74,8 +74,7 @@ export const Transactions = () => {
     )
 }
 
-const TransactionForm = (props) => {
-    const { onFormSubmit } = props;
+const TransactionForm = ({ onFormSubmit }) => {
     const [formData, setFormData] = useState({description:"", amount: "", type:"debit"})
 
     function handleChange(e) {

@@ -11,20 +11,24 @@ export const TotalIncomeExpense = () => {
 
     async function fetchData() {
         const response = await api.get("home/total-income-expense");
-        console.log("data",response.data.data)
-        setTotalAmounts(response.data.data);
+        console.log("data",response.data)
+        setTotalAmounts(response.data);
     }
     return (
         <div className="totals-container" >
-            <div className="total-credit">
-                <span className="text">TOTAL INCOME:</span>
-                <span className="value">{totalAmounts.totalCredit}</span>
+            <div className="total-balance">
+                <span className="text">TOTAL SAVINGS</span>
+                <span className="value">{totalAmounts?.totalSavings}</span>
             </div>
-            <div className="total-debit">
-            <span className="text">TOTAL EXPENSES:</span>
-            <span className="value">{totalAmounts.totalDebit}</span>
+            <div className="monthly-income">
+                <span className="value">{totalAmounts?.monthIncome}</span>
+                <span className="text">THIS MONTH'S INCOME</span>
                 
             </div>
+            <div className="monthly-expenses">
+            <span className="value">{totalAmounts?.monthDebit}</span>
+            <span className="text">THIS MONTH'S EXPENSES</span>
+            </div>  
         </div>
     )
 }
