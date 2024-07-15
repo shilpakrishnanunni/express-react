@@ -1,0 +1,10 @@
+* {
+
+}
+
+
+.main-div {
+    display: grid;
+    width: 99.9%;
+    min-height: 100vh;
+}
