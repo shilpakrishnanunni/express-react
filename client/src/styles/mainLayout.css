@@ -1,10 +1,14 @@
-* {
+/* * {
 
-}
+} */
 
 
 .main-div {
     display: grid;
+    grid-template-rows: 120px;
+    grid-template-columns: 220px;
     width: 99.9%;
-    min-height: 100vh;
+    /* min-height: 100vh; */
+    height: 98vh;
+    background-color: #f2f2f2;
 }

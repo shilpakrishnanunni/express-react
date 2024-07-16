@@ -1,0 +1,10 @@
+* {
+
+}
+
+.main-content {
+    grid-row: 2;
+    grid-column: 2;
+    background-color: #fafafa;
+    box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.1);
+}

@@ -1,6 +1,7 @@
 import NavBar from "./NavBar.jsx";
 import LeftMenu from "./LeftMenu.jsx";
 import MainContent from "./MainContent.jsx";
+import "../styles/mainLayout.css";
 
 
 export default function MainLayout() {
