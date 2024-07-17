@@ -8,7 +8,7 @@ export default function MainContent() {
 
     return (
         <div className="main-content" >
-            < Transactions />
+            {/* < Transactions /> */}
             < TotalIncomeExpense />
         </div>
     )

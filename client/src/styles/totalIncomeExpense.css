@@ -1,8 +1,10 @@
 * {
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
 }
 
 .totals-container {
+    grid-row: 1;
+    grid-column: 1;
     width: 330px;
     display: flex;
     flex-wrap: wrap;

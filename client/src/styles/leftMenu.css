@@ -8,11 +8,38 @@
     grid-row: 2;
     background-color: #fafafa;
     box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.1);
-    margin: 10px;
-    /* height: 90%; */
-    width: 200px;
-    /* position: fixed; */
-    /* padding-top: 60px; */
-    /* padding-left: 20px; */
-    /* margin: 10px 20px; */
+    margin: 5px;
+    width: 190px;
+    padding: 10px 0px;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; 
+}
+
+.left-menu ul {
+    list-style-type: none;
+    padding: 0px 5px 0px 15px;
+    margin: 0px;
+}
+
+.left-menu-item {
+    list-style: none;
+    padding: 20px 0px;
+}
+
+.left-menu-item>a {
+    color: #343435;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.left-menu-item>a:hover {
+    /* color: #343435; */
+    font-weight: 700;
+}
+
+.left-menu-item>a:active {
+    color: #949496;
+    /* font-size: 1.5rem; */
 }
