@@ -18,6 +18,7 @@ function LoginBody() {
                     <input type="password" name="password" id="password" placeholder="Password" className="login-input" />
                     <button type="submit" className="login-button" >Login</button>
                 </form>
+                <a href="" className="login-forgot-password-link">Forgot Password?</a>
             <span id="or" className="login-or">OR</span>
                 Don't have an account?
                 <a href=""  className="login-signup-link">Sign Up</a>

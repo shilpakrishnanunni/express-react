@@ -21,11 +21,14 @@ const sequelize = new Sequelize(
             min: 10,
             idle: 10000,
         },
-        // options: {
-        //     useUTC: false
-        // }
-        dialectOptions: {
+        options: {
+            // raw: true,
+            useUTC: false
         },
+        dialectOptions: {
+            timezone: "+00:00", // for reading from db
+        },
+        // timezone: "+00:00" // for writing to db
     }
 );
 
