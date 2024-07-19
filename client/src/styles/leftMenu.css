@@ -11,14 +11,14 @@
     margin: 5px;
     width: 190px;
     padding: 10px 0px;
-    display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center; 
+    /* display: flex;
+    justify-content: center; 
+    align-items: center;  */
 }
 
 .left-menu ul {
     list-style-type: none;
-    padding: 0px 5px 0px 15px;
+    padding: 20px 5px 0px 15px;
     margin: 0px;
 }
 
