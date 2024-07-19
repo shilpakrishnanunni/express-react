@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import NavBar from "./NavBar.jsx";
 import LeftMenu from "./LeftMenu.jsx";
-import MainContent from "./MainContent.jsx";
+import Dashboard from "./Dashboard.jsx";
 import Budget from "./Budget.jsx";
 import { Transactions } from "./Transactions.jsx";
 import Portfolio from "./Portfolio.jsx";
@@ -16,7 +16,7 @@ export default function MainLayout() {
             < NavBar />
             < LeftMenu />
             <Routes>
-                <Route path="/" element={< MainContent />} />
+                <Route path="/" element={< Dashboard />} />
                 <Route path="/budget" element={< Budget />} />
                 <Route path="/transactions" element={< Transactions />} />
                 <Route path="/portfolio" element={< Portfolio />} />

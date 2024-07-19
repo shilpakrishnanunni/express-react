@@ -1,13 +1,13 @@
-// import "../styles/mainContent.css";
+// import "../styles/dashboard.css";
 
 import { TotalIncomeExpense } from "./TotalIncomeExpense";
 import { Transactions } from "./Transactions";
 
 
-export default function MainContent() {
+export default function Dashboard() {
 
     return (
-        <div className="main-content" >
+        <div className="dashboard" >
             {/* < Transactions /> */}
             < TotalIncomeExpense />
         </div>
