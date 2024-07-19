@@ -146,7 +146,7 @@ input[type=number] {
     flex-basis: 10%;
 }
 
-button[type=submit] {
+.input-field button[type=submit] {
     border: none;
     background-color: aquamarine;
     border-radius: 2em;

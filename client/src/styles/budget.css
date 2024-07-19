@@ -1,0 +1,20 @@
+
+.budget {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+.monthly-budget-display {
+    grid-row: 1;
+    grid-column: 1;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+}
+
+.budget-category {
+    grid-row: 2;
+    grid-column: 1;
+}
+
