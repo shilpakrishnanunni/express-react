@@ -4,7 +4,7 @@ import axios from "axios";
 
 
 const defaults = {
-    baseURL: import.meta.env.VITE_APP_API_URL || 'http://localhost:3000',
+    baseURL: import.meta.env.VITE_APP_API_URL || 'http://localhost:3000/',
     // headers: () => ({
     //     'Content-Type': 'application/json',
     //     // 'Accept': 'application/json',
@@ -16,7 +16,7 @@ const defaults = {
 }
 
 const api = async (method, url, variables) => {
-    console.log("variables",variables)
+    console.log("-----URL-----",`${defaults.baseURL}${url}`)
     return await axios.request({
         method,
         url: `${defaults.baseURL}${url}`,
