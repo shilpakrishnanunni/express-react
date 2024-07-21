@@ -12,7 +12,7 @@ const sequelize = new Sequelize(
         dialect: "mysql",
         // logging: false,
         define: {
-            underscored: true,
+            underscored: false,
             freezeTableName: true,
             timestamps: true,
         },
