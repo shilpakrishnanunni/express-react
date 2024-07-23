@@ -1,0 +1,14 @@
+CREATE TABLE `Users` (
+  `id` int NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `budget` double(10,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+ALTER TABLE `Users`
+  ADD PRIMARY KEY (`id`);
+
+  ALTER TABLE `Users`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+  ALTER TABLE `Users` ADD `created_at` DATE NULL AFTER `budget`, ADD `updated_at` DATE NULL AFTER `created_at`; 
