@@ -5,9 +5,12 @@ import { hooks } from "../hooks/budget.hooks";
 
 
 export default function Budget() {
-    let budgetAmount = 500
     const budget = hooks.callBudgetDashboard();
     console.log("budget", budget?.data?.data);
+    // const budgetAmount = budget?.data?.data?.response?.budgetAmount ?? "NA";
+    const defaultCategory = [ { id: 1, name: 'NA', recurring: '1' } ];
+
+    const [ budgetAmount, setBudgetAmount ] = useState(budget?.data?.data?.response?.budgetAmount ?? "NA");
 
 
     const onFormSubmit = async (formData) => {
@@ -20,15 +23,21 @@ export default function Budget() {
     }
     return (
         <div className="budget">
-            < MonthlyBudget budgetAmount={budgetAmount}/>
-            < BudgetCategories onFormSubmit={onFormSubmit} />
+            < MonthlyBudget budgetAmount={budgetAmount} setBudgetAmount={setBudgetAmount} />
+            < AddCategoryForm onFormSubmit={onFormSubmit} />
+            < BudgetDropdown budgetCategories={budget?.data?.data?.response?.budgetCategories ?? defaultCategory} />
         </div>
     )
 }
 
-const MonthlyBudget = ({budgetAmount}) => {
+const MonthlyBudget = ({budgetAmount, setBudgetAmount}) => {
+    // const editBudgetTotal = async (e) => {
+    //     setBudgetAmount(e.target.value)
+    //     console.log("BUDGET AMOUNT", budgetAmount)
+    //     await api.patch("budget/alter-budget", JSON.stringify(budgetAmount));
+    // }
     const editBudgetTotal = () => {
-
+        // put a popup or an alert here
     }
     return (
         <div className="monthly-budget-display">
@@ -38,7 +47,7 @@ const MonthlyBudget = ({budgetAmount}) => {
     )
 }
 
-const BudgetCategories = ({onFormSubmit}) => {
+const AddCategoryForm = ({onFormSubmit}) => {
     const [formData, setFormData] = useState({ category: "", recurring: "0" });
 
     function handleChange(e) {
@@ -75,12 +84,23 @@ const BudgetCategories = ({onFormSubmit}) => {
     )
 }
 
-const BudgetDropdown = () => {
+const BudgetTable = () => {
 
     return (
         <div>
 
         </div>
+    )
+}
+
+const BudgetDropdown = ({budgetCategories}) => {
+
+    return (
+        <select value="ADD CATEGORY">
+            {budgetCategories.map((category, index) => (
+                <option name={category.name} value={category.name} id={category.id} key={category.id}>{category.name}</option>
+            ))}
+        </select>
     )
 }
 
