@@ -24,7 +24,7 @@ export const getBudgetDashboard = async (req, res, next) => {
 
 export const addCategory = async (req, res, next) => {
     try {
-        console.log("----/add-category----")
+        console.log(`-----${req.method} ${req.url}-----`);
         console.log(req.body)
         const { category, recurring } = req.body;
         if (!category || !recurring) return res.status(500).json("INVALID VALUES");
@@ -37,6 +37,20 @@ export const addCategory = async (req, res, next) => {
         return res.status(200);
     } catch (error) {
         console.log("ERROR FROM addCategory", error);
+        return next(error);
+    }
+};
+
+export const selectCategory = async (req, res, next) => {
+    try {
+        console.log(`-----${req.method} ${req.url}-----`);
+        console.log(req.body)
+        const { categoryId } = req.body;
+    
+        await Categories.update({ status: "1" }, { where: { id: categoryId } });
+        return res.status(200);
+    } catch (error) {
+        console.log("ERROR FROM selectCategory", error);
         return next(error);
     }
 };
