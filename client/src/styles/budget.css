@@ -13,8 +13,14 @@
     align-items: center;
 }
 
-.budget-category {
+.add-category-form {
     grid-row: 2;
     grid-column: 1;
 }
 
+.select-category {
+    height: 1.5rem;
+    margin: 5px;
+    border: none;
+    background-color: #cac9ce;
+}

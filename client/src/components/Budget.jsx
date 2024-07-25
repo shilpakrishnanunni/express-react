@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Select from "react-select";
 import "../styles/budget.css";
 import api from "../utils/api";
 import { hooks } from "../hooks/budget.hooks";
@@ -9,6 +10,7 @@ export default function Budget() {
     console.log("budget", budget?.data?.data);
     // const budgetAmount = budget?.data?.data?.response?.budgetAmount ?? "NA";
     const defaultCategory = [ { id: 1, name: 'NA', recurring: '1' } ];
+    const budgetCategories = budget?.data?.data?.response?.budgetCategories;
 
     const [ budgetAmount, setBudgetAmount ] = useState(budget?.data?.data?.response?.budgetAmount ?? "NA");
 
@@ -25,7 +27,8 @@ export default function Budget() {
         <div className="budget">
             < MonthlyBudget budgetAmount={budgetAmount} setBudgetAmount={setBudgetAmount} />
             < AddCategoryForm onFormSubmit={onFormSubmit} />
-            < BudgetDropdown budgetCategories={budget?.data?.data?.response?.budgetCategories ?? defaultCategory} />
+            < BudgetDropdown budgetCategories={budgetCategories ?? defaultCategory} />
+            <BudgetTable budgetCategories={budgetCategories ?? defaultCategory}/>
         </div>
     )
 }
@@ -74,7 +77,7 @@ const AddCategoryForm = ({onFormSubmit}) => {
     }
 
     return (
-        <div className="budget-category">
+        <div className="add-category-form">
             <form onSubmit={handleSubmit} >
                 <input type="text" name="category" placeholder="ADD NEW CATEGORY" value={formData.category} onChange={handleChange} />
                 <input type="checkbox" name="recurring-check" id="recurring-check" onChange={handleCheckBox} checked={formData.recurring==='1'} />
@@ -84,23 +87,44 @@ const AddCategoryForm = ({onFormSubmit}) => {
     )
 }
 
-const BudgetTable = () => {
+const BudgetTable = ({budgetCategories}) => {
 
+    const selectedCategories = budgetCategories.filter(category => category.status=="1");
+    console.log("selectedCategories", selectedCategories)
     return (
         <div>
-
+            <ul>
+                {selectedCategories.map((category) => {
+                    <li key={category.id}>
+                        {category}
+                    </li>
+                })}
+            </ul>
         </div>
     )
 }
 
 const BudgetDropdown = ({budgetCategories}) => {
+    const dropdownCategories = budgetCategories.map(row => ({ value: row.id, label: row.name }))
+    const placeholder = { value: '', label: 'SELECT CATEGORY' };
+    const options = [placeholder, ...dropdownCategories];
+
+    const handleChange = (selectedOption) => {
+        if (selectedOption && selectedOption.value!="") {
+            console.log(`${JSON.stringify(selectedOption)} has been selected`)
+        }
+    }
 
     return (
-        <select value="ADD CATEGORY">
-            {budgetCategories.map((category, index) => (
-                <option name={category.name} value={category.name} id={category.id} key={category.id}>{category.name}</option>
-            ))}
-        </select>
+        <div>
+            <Select
+                defaultValue={placeholder}
+                // isMulti
+                name="category-select"
+                options={options}
+                className="select-category"
+                onChange={handleChange}
+            />
+        </div>
     )
 }
-

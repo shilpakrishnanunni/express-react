@@ -8,7 +8,7 @@ export const getBudgetDashboard = async (req, res, next) => {
         const userID = 1;
         const response = {};
         const [budgetCategories, user] = await Promise.all([
-            Categories.findAll({ attributes: ["id", "name", "recurring"], where: { status: "1" }, raw:true }),
+            Categories.findAll({ attributes: ["id", "name", "status", "recurring"], raw:true }),
             Users.findOne({ attributes: ["budget"], where: { id: userID }, raw: true })
         ])
 
@@ -31,6 +31,7 @@ export const addCategory = async (req, res, next) => {
     
         await Categories.create({
             name: category,
+            status: "0",
             recurring: req.body.recurring ? "1" : "0"
         })
         return res.status(200);
