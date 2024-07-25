@@ -92,13 +92,13 @@ const BudgetTable = ({budgetCategories}) => {
     const selectedCategories = budgetCategories.filter(category => category.status=="1");
     console.log("selectedCategories", selectedCategories)
     return (
-        <div>
+        <div className="budget-category-table">
             <ul>
-                {selectedCategories.map((category) => {
+                {selectedCategories.map((category) => (
                     <li key={category.id}>
-                        {category}
+                        {category.name}
                     </li>
-                })}
+                ))}
             </ul>
         </div>
     )
