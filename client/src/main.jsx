@@ -1,23 +1,19 @@
-import React from 'react'
+import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
-import {
-  createBrowserRouter,
-  RouterProvider,
-  BrowserRouter
-} from "react-router-dom";
-import App from './App.jsx'
-import './index.css'
+import { createBrowserRouter, RouterProvider, BrowserRouter } from 'react-router-dom';
+import App from './App.jsx';
+import './index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: < App />
+    path: '/',
+    element: <App />
   }
-])
+]);
 const queryClient = new QueryClient();
 
 root.render(
@@ -26,8 +22,8 @@ root.render(
       <QueryClientProvider client={queryClient}>
         {/* <RouterProvider router={router} /> */}
         <App />
-        < ReactQueryDevtools />
+        <ReactQueryDevtools />
       </QueryClientProvider>
     </BrowserRouter>
   </React.StrictMode>
-)
+);

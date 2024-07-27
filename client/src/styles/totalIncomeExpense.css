@@ -1,55 +1,55 @@
 * {
-    /* box-sizing: border-box; */
+  /* box-sizing: border-box; */
 }
 
 .totals-container {
-    grid-row: 1;
-    grid-column: 1;
-    width: 330px;
-    display: flex;
-    flex-wrap: wrap;
+  grid-row: 1;
+  grid-column: 1;
+  width: 330px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .text {
-    font-size: 0.5em;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-weight: bold;
-    color: #8d8d8d;
+  font-size: 0.5em;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: bold;
+  color: #8d8d8d;
 }
 
 .value {
-    font-size: 0.75em;
-    font-weight: bold;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 0.75em;
+  font-weight: bold;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .totals-container div {
-    padding: 10px;
-    border: 1px solid #a3a3a3;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  padding: 10px;
+  border: 1px solid #a3a3a3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .total-balance {
-    flex: 1 1 100%;
-    white-space: nowrap;
-    .value {
-        color: darkgreen;
-        font-size: 1.25em;
-    }
-}
-
-.monthly-income, .monthly-expenses {
-    flex: 1 1 50%;
-}
-
-.monthly-income .value{
+  flex: 1 1 100%;
+  white-space: nowrap;
+  .value {
     color: darkgreen;
-
+    font-size: 1.25em;
+  }
 }
 
-.monthly-expenses .value{
-    color: brown;
+.monthly-income,
+.monthly-expenses {
+  flex: 1 1 50%;
+}
+
+.monthly-income .value {
+  color: darkgreen;
+}
+
+.monthly-expenses .value {
+  color: brown;
 }
