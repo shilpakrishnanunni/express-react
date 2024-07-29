@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import api from '../utils/api';
 
 export const hooks = {
@@ -6,14 +6,22 @@ export const hooks = {
     return useQuery({
       queryKey: ['budget-dashboard'],
       queryFn: async () => {
-        return api.get('budget');
+        const response = await api.get('budget');
+        return response.data;
       }
     });
   },
   useSelectCategory: () => {
+    const queryClient = useQueryClient();
     return useMutation({
-      mutationFn: (categoryId) => {
-        return api.patch('budget/select-category', { categoryId });
+      mutationFn: async (categoryId) => {
+        await api.patch('budget/select-category', { categoryId });
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries(['budget-dashboard']);
+      },
+      onError: (error) => {
+        console.error("useSelectCategory (useMutation) ERROR", error)
       }
     });
   }

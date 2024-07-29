@@ -25,7 +25,7 @@
 }
 
 .budget .category-display {
-  grid: row 3px;
+  grid: row 3;
   grid-column: 1;
 }
 
