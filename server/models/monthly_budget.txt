@@ -1,0 +1,21 @@
+CREATE TABLE `MonthlyBudget` (
+  `id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `category_id` int NOT NULL,
+  `total_amount` double(10,2) NOT NULL,
+  `amount_left` double(10,2) NOT NULL,
+  `created_at` date DEFAULT NULL,
+  `updated_at` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+ALTER TABLE `MonthlyBudget`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_monthly_budget_users_user_id` (`user_id`),
+  ADD KEY `fk_monthly_budget_categories_category_id` (`category_id`);
+
+ALTER TABLE `MonthlyBudget`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `MonthlyBudget`
+  ADD CONSTRAINT `fk_monthly_budget_categories_category_id` FOREIGN KEY (`category_id`) REFERENCES `Categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_monthly_budget_users_user_id` FOREIGN KEY (`user_id`) REFERENCES `Users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;

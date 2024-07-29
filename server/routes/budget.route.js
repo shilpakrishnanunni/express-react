@@ -1,15 +1,11 @@
 import { Router } from "express";
+import { addCategory, alterBudget, getBudgetDashboard, selectCategory } from "../controllers/budget.controller.js";
 
 const router = Router();
 
-router.get("/", async (req, res, next) => {
-    return res.json("IN PROGRESS")
-})
-
-router.post("/add-category", async (req, res) => {
-    console.log("----/add-category----")
-    console.log(req.body)
-    return res.status(200);
-})
+router.get("/", getBudgetDashboard);
+router.post("/add-category", addCategory);
+router.patch("/alter-budget", alterBudget);
+router.patch("/select-category", selectCategory)
 
 export default router;

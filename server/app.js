@@ -12,9 +12,19 @@ app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(morgan('tiny'))
 
-checkConnection()
+checkConnection();
 
 const PORT = process.env.PORT;
+
+app.use((req, res, next) => {
+    console.log(`-----${req.method} ${req.url}-----`);
+    if (req.method=="GET") {
+        console.log("req.query",req.query);
+    } else {
+        console.log("req.body",req.body);
+    }
+    next();
+})
 
 mountRoutes(app);
 
