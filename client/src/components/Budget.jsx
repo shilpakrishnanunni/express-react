@@ -129,14 +129,37 @@ const BudgetTable = ({ listCategories }) => {
     <div className="budget-category-table">
       <ul>
         {listCategories.map((category) => (
-          <li key={category.id} className="">
-            {category.name}
-          </li>
+          <BudgetCategoryItem category={category} />
         ))}
       </ul>
     </div>
   );
 };
+
+const BudgetCategoryItem = ({ category }) => {
+  return (
+    <li key={category.id} className="budget-category-list-item">
+      <span className='category-name'>{category.name}</span>
+      <span className='category-total'>{category.totalAmount}</span>
+      <span className='category-amount-left'>{category.amountLeft}</span>
+      <span className='category-recurring'><RecurringStatusCheckbox recurring={category.recurring}/></span>
+      <span className='category-status' ><RemoveCategoryButton/></span>
+    </li>
+  );
+};
+
+const RecurringStatusCheckbox = ({}) => {
+  return (
+    <input type="checkbox" name="recurring-status-checkbox" id="recurring-status-checkbox"/>
+  )
+};
+
+const RemoveCategoryButton = ({}) => {
+  return (
+    <button className='category-remove-button'>X</button>
+  )
+};
+
 
 const BudgetDropdown = ({ dropdownCategories, handleDropdownChange }) => {
   const handleChange = (selectedCategory) => {
@@ -155,3 +178,4 @@ const BudgetDropdown = ({ dropdownCategories, handleDropdownChange }) => {
     </div>
   );
 };
+
