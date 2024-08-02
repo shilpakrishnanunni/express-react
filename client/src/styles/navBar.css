@@ -1,6 +1,13 @@
 * {
 }
 
+.outline {
+  border: 1px solid black;
+  overflow: hidden;
+  margin: 0px;
+  padding: 0px;
+}
+
 .navbar {
   background-color: #fafafa;
   grid-row: 1;
@@ -9,4 +16,26 @@
   box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
   margin: 5px;
   padding: 0px 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.navbar-list{
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.navbar-list li:first-child {
+  margin-right: auto;
+}
+
+.navbar-component {
+  padding: 10px 10px;
 }

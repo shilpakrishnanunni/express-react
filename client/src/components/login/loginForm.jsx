@@ -1,14 +1,15 @@
 import '../../styles/loginPage.css';
-import { hooks } from '../../hooks/login.hooks';
+import { hooks } from '../../hooks/login.hooks.js';
 import Form from '../Form.jsx';
 
-export default function LoginForm({ handleClick }) {
+const LoginForm = ({ handleClick, onLogin }) => {
   const mutation = hooks.useLoginSubmit();
 
   const handleSubmit = (formData) => {
     mutation.mutate(formData, {
       onSuccess: (data) => {
         console.log('login successful', data);
+        onLogin(data.user.id);
       },
       onError: (error) => {
         console.error('login error', error);
@@ -24,8 +25,8 @@ export default function LoginForm({ handleClick }) {
         onSubmit={handleSubmit}
         submitButtonText="LOGIN"
         fields={[
-          { name: 'username', type: 'text', placeholder: 'USERNAME' },
-          { name: 'password', type: 'password', placeholder: 'PASSWORD' }
+          { name: 'username', type: 'text', placeholder: 'USERNAME', required: true },
+          { name: 'password', type: 'password', placeholder: 'PASSWORD', required: true }
         ]}
       />
       <span>
@@ -41,4 +42,6 @@ export default function LoginForm({ handleClick }) {
       </span>
     </div>
   );
-}
+};
+
+export default LoginForm;

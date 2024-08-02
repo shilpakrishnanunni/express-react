@@ -8,12 +8,6 @@ import './index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <App />
-  }
-]);
 const queryClient = new QueryClient();
 
 root.render(

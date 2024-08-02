@@ -2,7 +2,7 @@ import '../../styles/loginPage.css';
 import { hooks } from '../../hooks/login.hooks';
 import Form from '../Form.jsx';
 
-export default function SignUpForm({ handleClick }) {
+const SignUpForm = ({ handleClick }) => {
   const mutation = hooks.useSignUpSubmit();
 
   const handleSubmit = (formData) => {
@@ -23,10 +23,10 @@ export default function SignUpForm({ handleClick }) {
         onSubmit={handleSubmit}
         submitButtonText="SIGN UP"
         fields={[
-          { name: 'username', type: 'text', placeholder: 'USERNAME' },
-          { name: 'email', type: 'email', placeholder: 'EMAIL' },
-          { name: 'password', type: 'password', placeholder: 'PASSWORD' },
-          { name: 'confirmPassword', type: 'password', placeholder: 'CONFIRM PASSWORD' }
+          { name: 'username', type: 'text', placeholder: 'USERNAME', required: true },
+          { name: 'email', type: 'email', placeholder: 'EMAIL', required: true },
+          { name: 'password', type: 'password', placeholder: 'PASSWORD', required: true },
+          { name: 'confirmPassword', type: 'password', placeholder: 'CONFIRM PASSWORD', required: true }
         ]}
       />
       <span>
@@ -36,4 +36,6 @@ export default function SignUpForm({ handleClick }) {
       </span>
     </div>
   );
-}
+};
+
+export default SignUpForm;

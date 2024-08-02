@@ -6,7 +6,7 @@ export default function LeftMenu() {
   return (
     <div className="left-menu">
       <ul>
-        <LeftMenuEntry text="HOME" link="/" />
+        <LeftMenuEntry text="HOME" link="/dashboard" />
         <LeftMenuEntry text="MANAGE BUDGET" link="/budget" />
         <LeftMenuEntry text="TRANSACTION HISTORY" link="/transactions" />
         <LeftMenuEntry text="PORTFOLIO" link="/portfolio" />
@@ -19,7 +19,6 @@ const LeftMenuEntry = ({ text, link }) => {
   return (
     <li className="left-menu-item">
       <NavLink to={link}>{text}</NavLink>
-      {/* <a href={link} >{text}</a> */}
     </li>
   );
 };

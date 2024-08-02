@@ -2,7 +2,7 @@ import '../../styles/loginPage.css';
 import { hooks } from '../../hooks/login.hooks';
 import Form from '../Form.jsx';
 
-export default function ForgotPasswordForm({ handleClick }) {
+const ForgotPasswordForm = ({ handleClick }) => {
   const mutation = hooks.useForgotPasswordSubmit();
 
   const handleSubmit = (formData) => {
@@ -22,7 +22,7 @@ export default function ForgotPasswordForm({ handleClick }) {
         formType="forgotPassword"
         onSubmit={handleSubmit}
         submitButtonText="SEND EMAIL"
-        fields={[{ name: 'email', type: 'email', placeholder: 'EMAIL' }]}
+        fields={[{ name: 'email', type: 'email', placeholder: 'EMAIL', required: true }]}
       />
       <span>
         <a href="#" data-value="login" onClick={handleClick}>
@@ -31,4 +31,6 @@ export default function ForgotPasswordForm({ handleClick }) {
       </span>
     </div>
   );
-}
+};
+
+export default ForgotPasswordForm;

@@ -26,5 +26,13 @@ export const hooks = {
             }
         })
 
+    },
+    useLogout: () => {
+        return useMutation({
+            mutationFn: async (userId) => {
+                const response = await api.post("logout",{userId});
+                return response.data;
+            }
+        })
     }
 };
