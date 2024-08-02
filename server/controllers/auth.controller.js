@@ -6,7 +6,6 @@ export const login = async (req, res, next) => {
     try {
         const { username, password } = req.body;
         const user = await service.authenticateUser({ username, password });
-        console.log("USR", user, user.id, user['id'])
 
         req.session.userId = user.id;
         
@@ -14,7 +13,7 @@ export const login = async (req, res, next) => {
         return res.status(200).json({ success: true, user: { id: user.id, username: user.name } });
     } catch (error) {
         console.log("ERROR FROM login", error);
-        next(error);
+        return res.status(401).json({ success: false, message: "Invalid username or password." });
     }
 };
 

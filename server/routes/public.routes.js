@@ -1,9 +1,10 @@
 import { Router } from "express";
+import { loginLimiter } from "../middleware/loginLimiter.middleware.js";
 import { login, logout } from "../controllers/auth.controller.js";
 
 const router = Router();
 
-router.post("/login", login);
+router.post("/login", loginLimiter, login);
 
 router.post("/signup", (req, res, next) => {
     console.log("SIGNUP")
