@@ -24,6 +24,11 @@
     padding-bottom: 20px;
 }
 
+.error-message{
+    color: #e73a48;
+    padding-bottom: 10px;
+}
+
 .login-box form {
     margin: 0px;
     padding: 0px;
@@ -35,6 +40,10 @@
 
 .login-box span {
     margin: 10px;
+}
+
+.welcome-message {
+    margin-bottom: 30px !important;
 }
 
 .login-box span a {

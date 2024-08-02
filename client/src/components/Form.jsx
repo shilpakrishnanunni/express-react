@@ -3,6 +3,7 @@ import { useState } from 'react';
 const Form = ({ fields, submitButtonText, onSubmit }) => {
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
+  const [passwordVisibility, setPasswordVisibility] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,12 +32,16 @@ const Form = ({ fields, submitButtonText, onSubmit }) => {
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setPasswordVisibility(!passwordVisibility);
+  }
+
   return (
     <form onSubmit={handleSubmit} className="">
       {fields.map((field) => (
         <div key={field.name} className="form-field">
           <input
-            type={field.type}
+            type={field.type==="password" ? ( passwordVisibility ? "text" : "password" ) : field.type}
             name={field.name}
             value={formData[field.name] || ''}
             required={field.required}
@@ -44,6 +49,15 @@ const Form = ({ fields, submitButtonText, onSubmit }) => {
             placeholder={field.placeholder}
             className="login-input-field"
           />
+          {field.type === 'password' && (
+              <span
+                className="toggle-password-icon"
+                onClick={togglePasswordVisibility}
+              >
+                {passwordVisibility ? '👁️' : '👁️‍🗨️'}
+
+              </span>
+            )}
           {errors[field.name] && <div className="error-message">{errors[field.name]}</div>}
         </div>
       ))}

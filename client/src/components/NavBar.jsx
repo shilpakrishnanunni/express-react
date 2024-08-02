@@ -17,7 +17,7 @@ const NavBar = ({username,onLogout}) => {
 
 const AppName = () => {
   return (
-    <li className="navbar-component logo outline">
+    <li className="navbar-component logo ">
       <a href="/dashboard">BUDGET TRACKER</a>
     </li>
   );
@@ -25,7 +25,7 @@ const AppName = () => {
 
 const Greeting = ({username}) => {
   return (
-    <li className="navbar-component greeting outline">
+    <li className="navbar-component greeting ">
       <span>Welcome back, {username}.</span>
     </li>
   );
@@ -33,7 +33,7 @@ const Greeting = ({username}) => {
 
 const Profile = () => {
   return (
-    <li className="navbar-component profile outline">
+    <li className="navbar-component profile ">
       <a href="">PROFILE</a>
     </li>
   );
@@ -56,7 +56,7 @@ const Logout = ({onLogout}) => {
 
 
   return (
-    <li className="navbar-component logout outline">
+    <li className="navbar-component logout ">
       {/* <i src={logout}></i> */}
       <a href='#' onClick={handleLogout}>LOGOUT</a>
     </li>
