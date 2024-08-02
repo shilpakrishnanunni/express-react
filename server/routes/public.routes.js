@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { login } from "../controllers/auth.controller.js";
+import { login, logout } from "../controllers/auth.controller.js";
 
 const router = Router();
 
@@ -13,6 +13,8 @@ router.post("/forgot-password", (req, res, next) => {
     console.log("FORGOT PASSWORD")
     return res.status(200).json({ success: true });
 });
+
+router.post("/logout", logout);
 
 
 export default router;
