@@ -1,0 +1,17 @@
+CREATE TABLE `UserSessions` (
+  `id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `session_id` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+// change id to uuid since it gets deleted all the time
+ALTER TABLE `UserSessions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_user_sessions_user_users_id` (`user_id`);
+
+  ALTER TABLE `UserSessions`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+  ALTER TABLE `UserSessions`
+  ADD CONSTRAINT `fk_user_sessions_user_users_id` FOREIGN KEY (`user_id`) REFERENCES `Users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;

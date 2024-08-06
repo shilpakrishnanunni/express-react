@@ -1,16 +1,49 @@
 import 'dotenv/config'
-import express from "express";
 import cors from "cors";
+import csurf from 'csurf';
+import express from "express";
 import morgan from "morgan";
+import session from 'express-session';
+import { v4 as uuidv4 } from 'uuid';
 import { checkConnection } from "./config/db.js";
 import mountRoutes from './routes.js';
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173', // process.env.CLIENT_URL,
+    // methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+    credentials: true
+}));
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
-app.use(morgan('tiny'))
+app.use(morgan('tiny'));
+app.use(session({
+    genid: (req) => {
+        return uuidv4()
+    },
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        httpOnly: true,
+        secure: process.env.NODE_ENV==="production",
+        sameSite: 'lax',
+        maxAge: 1000 * 60 * 60 * 24
+    }
+}));
+
+// app.use(csurf);
+
+app.use((req, res, next) => {
+    console.log(`-----${req.method} ${req.url}-----`);
+    if (req.method=="GET") {
+        console.log("req.query",req.query);
+    } else {
+        console.log("req.body",req.body);
+    }
+    next();
+})
 
 checkConnection();
 
@@ -38,10 +71,14 @@ app.get("/hello-world", (req, res) => {
 
 app.use((err, req, res, next) => {
     console.log("From error handling middleware", err)
-    if (res.headersSent) {
-        return next(err)
+    if (err.code==="EBADCSRFTOKEN") { //csrf
+        res.status(403).json({ message: 'Form tampered with' });
+    } else {
+        if (res.headersSent) {
+            return next(err)
+        }
+        res.status(500).json({ error: err.message });
     }
-    res.status(500).json({ error: err.message });
 })
 
 app.use((req, res) => {

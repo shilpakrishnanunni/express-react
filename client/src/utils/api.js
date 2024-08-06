@@ -7,7 +7,7 @@ const defaults = {
   // headers: () => ({
   //     'Content-Type': 'application/json',
   //     // 'Accept': 'application/json',
-  //     // Authorization: getStoredAuthToken() ? `Bearer ${getStoredAuthToken()}` : undefined,
+  //     // Authorization: getStoredAuthToken() // incomplete
   // })
   headers: {
     'Content-Type': 'application/json'
@@ -20,6 +20,7 @@ const api = async (method, url, variables) => {
     method,
     url: `${defaults.baseURL}${url}`,
     headers: defaults.headers,
+    withCredentials: true,
     params: method === 'get' ? variables : undefined,
     data: method !== 'get' ? variables : undefined
     // paramsSerializer:
