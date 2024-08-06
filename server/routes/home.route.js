@@ -42,7 +42,7 @@ router.get("/total-income-expense", async (req, res) => {
     const firstDay = new Date(Date.UTC(today.getFullYear(), today.getMonth(), 1, 0, 0, 0));
     const lastDay = new Date(Date.UTC(today.getFullYear(), today.getMonth() + 1, 0, 23, 59, 59));
 
-    const data = await Transactions.findOne({
+    const totalData = await Transactions.findOne({
         attributes: [
             [Sequelize.literal('SUM(CASE WHEN type="credit" THEN `amount` ELSE 0 END)'),'totalCredit'],
             [Sequelize.literal('SUM(CASE WHEN type="debit" THEN `amount` ELSE 0 END)'),'totalDebit']
@@ -58,9 +58,9 @@ router.get("/total-income-expense", async (req, res) => {
         raw: true
     });
     res.json({ 
-        totalSavings: (Number(data.totalCredit) > Number(data.totalDebit)) ? Number(data.totalCredit) - Number(data.totalDebit) : 0,
-        monthIncome: monthData.totalCredit,
-        monthDebit: monthData.totalDebit
+        totalSavings: (Number(totalData.totalCredit) > Number(totalData.totalDebit)) ? Number(totalData.totalCredit) - Number(totalData.totalDebit) : 0,
+        monthIncome: monthData.totalCredit ?? 0,
+        monthDebit: monthData.totalDebit ?? 0
     });
 })
 
